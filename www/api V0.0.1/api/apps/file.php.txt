@@ -1,0 +1,11 @@
+<?php
+// This is a test script you can run from the command line to test if your php installation and if it allows the rescue script
+// to be executed on a remote computer. 
+// Usage (run from command line on the server): 
+// php file.php.txt
+// You can remote desktop to the client computer and check if the Powerstack services restart.
+// Replace the "SOMECOMPUTER" attribute with our test computer name and update the paths if you need to.
+
+exec ('c:\windows\system32\WindowsPowerShell\v1.0\PowerShell.exe -ExecutionPolicy Bypass -File "C:\inetpub\wwwroot\api\apps\RescuePS.ps1" "SOMECOMPUTER"',$o);
+print_r($o);
+?>
