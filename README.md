@@ -126,6 +126,7 @@ developer to improve the features, however any contributions would be appreciate
 - Automatic updates from the server when a new client is release. 
 - User login for the server interface.
 - Section on the web interface to analize the log data.
+- Custom client API port.
 
 ************
 ## Further help
