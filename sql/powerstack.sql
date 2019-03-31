@@ -9,13 +9,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 
-CREATE TABLE `clientgroups` (
+CREATE TABLE `clientGroups` (
   `id` bigint(20) NOT NULL,
   `clientId` bigint(20) NOT NULL,
   `groupId` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `clientgroups` (`id`, `clientId`, `groupId`) VALUES
+INSERT INTO `clientGroups` (`id`, `clientId`, `groupId`) VALUES
 (1, 97, 1);
 
 CREATE TABLE `clients` (
@@ -74,7 +74,7 @@ INSERT INTO `scripts` (`id`, `name`, `description`, `data`, `location`, `type`, 
 (8, 'CleanLogs.js', 'Delete old logs from database', 'var sqlite3 = require(\'sqlite3\').verbose();\r\nlet logdb = new sqlite3.Database(\'../db/log.db\', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {\r\n	if (err){\r\n		console.error(datestamp + \": Log Database Connection error\");\r\n	}else{\r\n		//console.log(datestamp + \': Log Connected to the database.\');\r\n	}\r\n});\r\nvar d = new Date(); // Today!\r\nd.setDate(d.getDate() - 7); // Last week!\r\n\r\nlet sql = \"DELETE from log where syncstatus = 1 and datestamp > \'\" + d + \"\'\";\r\nlogdb.run(sql, [], function(err) {\r\n	if (err) {\r\n		//logdb.close()\r\n		console.log(err.message);\r\n	}\r\n})\r\nlogdb.close()', 'js', 2, '1 */4 * * *', 1, 1);
 
 
-ALTER TABLE `clientgroups`
+ALTER TABLE `clientGroups`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `clients`
