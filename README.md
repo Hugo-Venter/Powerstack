@@ -36,13 +36,11 @@ running.
 #### Client install:
 
 A binary installation file for the client software is provided in the bin directory. Once the client is installed on your user
-computer create a local or domain admin account on the user computer/domain controller and install the services by running the 
-Install_Services.bat file as administrator located in the install directory eg C:\Program Files (x86)\Powerstack\. 
+computer run the Install_Services.bat file as administrator located in the install directory eg C:\Program Files (x86)\Powerstack\. It will attempt to create a local administrator user called "Powerstack" with a default password, please reset the password for this user.
 
-Now you need to stop the Powerstack Task Manager and API services. The client does not yet know where your server is located. 
-Update the TaskManager.js and API.js files with the domain name of your server. Replace the lines mydomain.com with your domain.
+The client does not yet know where your server is located. Update the TaskManager.js and API.js files with the domain name of your server. Replace the lines mydomain.com with your domain.
 
-Edit the properties of each service and set the run as user to the admin accounts your created. 
+Edit the properties of each service and set the run as user to the admin accounts that was created "Powerstack". 
 
 You can now start the services or wait and install your server first.
 
