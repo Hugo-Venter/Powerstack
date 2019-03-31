@@ -21,14 +21,15 @@ class Clients extends CI_Controller {
 	 public function __construct() {
         parent::__construct();
 		$this->load->database();
-		$this->load->model('clients_model'); 
+		$this->load->model('clients_model');
+		$this->load->model('scripts_model'); 
 	}
 	 
 	public function accounts()
 	{
 		
 		$this->load->helper('form');
-
+		$data['scripts'] = $this->scripts_model->get_all_scripts();
 		if (isset($_GET['delete'])){
 
 			$data['clientId'] = $_GET['clientId'];

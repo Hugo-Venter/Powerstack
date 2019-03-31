@@ -28,6 +28,7 @@
 			  <a class="dropdown-item" href="?delete=true&clientId=<?php echo $client_details[0]['id']; ?>"><i class="fa fa-trash mr-1"></i>Delete</a>
 			 
 				<a class="dropdown-item" href="#" onclick="javascript:http_send('<?php echo $client_details[0]['id']; ?>','<?php echo api_url('index.php/api/rescue/'); echo $client_details[0]['computerName']; ?>')"><i class="fa fa-life-ring mr-1"></i>Rescue</a>
+				<a class="dropdown-item" href="#" onclick="javascript:http_send('<?php echo $client_details[0]['id']; ?>','http://<?php echo $client_details[0]['ip']; ?>:3000/ps/invoke/'+ document.getElementById('scripts').value + '/');"><i class="fa fa-power-off mr-1"></i>Execute</a>
 			<?php
 			  if ($client_details[0]['ip'] > ''){ ?>
 			  <a class="dropdown-item" href="http://<?php echo $client_details[0]['ip']; ?>:3000/sysinfo" target="<?php echo $client_details[0]['id']; ?>"><i class="fa fa-desktop mr-1"></i>Sys Info</a>
@@ -213,10 +214,46 @@ if (isset($client_details)){
         
         <!-- /form sample -->
     </div>
+	<?php
+	  if (isset($client_details)){
+	?>
+	<div class="sidebar"><div class="sidebar-content card d-none d-lg-block">
+	<div class="card-body">
+        <div class="category-title pb-1">
+            <h4>Remote Execute Script.</h4>
+        </div>
+        <!-- Card sample -->
+        <div class="text-center">
+
+            <div class="form-group">
+				<select class="select2 form-control" name="script_id" id="scripts">
+				<?php 
+				for ($i = 0; $i < count($scripts);$i++){
+					?>
+				<option value="<?php echo $scripts[$i]['name'] ?>"><?php echo $scripts[$i]['name'] ?></option>
+				<?php
+				}
+				?>
+					
+				</select>
+			</div>
+ 
+        </div>
+        
+        <!-- /form sample -->
+    </div>
+	</div>
 </div>
+<?php
+	  }
+?>
 
           </div>
         </div>
+
+        </div>
+		
+		
       </div>
     </div>
 <script>
@@ -226,5 +263,36 @@ function enableedit(){
 	//document.getElementById('apiKey').readOnly = false;
 	document.getElementById('TVID').readOnly = false;
 }
+function http_send(clientid, url){
+	console.log(url);
+	var xhttp = new XMLHttpRequest();
+	xhttp.timeout = 50000
+	xhttp.onreadystatechange = function(res) {
+	if (this.readyState == 4 && this.status == 200) {
+		console.log(xhttp.response);
+		if (xhttp.response == "failed"){
+			//document.getElementById(clientid).style.backgroundColor = "#FFCE54";
+			//var but = document.getElementById(clientid).innerHTML;
+			//document.getElementById(clientid).innerHTML = but + " - failed";
+		}else{
+			//var but = document.getElementById(clientid).innerHTML;
+			//document.getElementById("mes" + clientid).innerHTML = xhttp.response;
+			//document.getElementById(clientid).innerHTML = but + " - success";
+			//document.getElementById("res" + clientid).style.display = "block";
+			//document.getElementById(clientid).style.backgroundColor = "#1EAA8A";
+		}
+	}else{
+		///console.log(this)
+	}
+	};
+	xhttp.ontimeout = function (e) {
+	console.log('the connection timed out');
+	//var but = document.getElementById(clientid).innerHTML;
+	//document.getElementById(clientid).innerHTML = but + " - timeout";
+	//document.getElementById(clientid).style.backgroundColor = "#636363";
+	};
+	xhttp.open("GET", url, true);
+	xhttp.send();
+}	
 </script>
 
