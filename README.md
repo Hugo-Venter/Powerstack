@@ -118,13 +118,15 @@ Anyone who can help me improve this software and is willing to spend time on it 
 developer to improve the features, however any contributions would be appreciated. 
 
 ************
-## Wants
+## Needs
 
-Web installer for the server interface and API.
-Client installer features to update the server URI in the js files and create the admin user for the run as user. 
-Download the required extentions depending on the Powershell version. 
-Automatic updates from the server when a new client is release. 
-User login for the server interface.
+- Web installer for the server interface and API.
+- Client installer features to update the server URI in the js files. 
+- Download the required extentions depending on the Powershell version. 
+- Automatic updates from the server when a new client is release. 
+- User login for the server interface.
+- Section on the web interface to analize the log data.
+- Custom client API port.
 
 ************
 ## Further help
