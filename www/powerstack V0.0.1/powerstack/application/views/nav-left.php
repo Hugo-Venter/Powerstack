@@ -26,7 +26,7 @@
               </li>
             </ul>
           </li>
-		  
+		  <li class=" nav-item"><a href="<?php echo base_url('/index.php/logs/get'); ?>"><i class="icon-book-open"></i><span class="menu-title" data-i18n="nav.dash.main">Logs</span></a></li>
 		  <li class=" nav-item"><a href="<?php echo base_url('/index.php/download'); ?>"><i class="icon-cloud-download"></i><span class="menu-title" data-i18n="nav.dash.main">Download</span></a></li>
         </ul>
       </div>

@@ -48,7 +48,7 @@ class Logs_model extends CI_Model
 	public function get_backups_missing(){
 		$yesterday_start = date("Y-m-d 00:00:00", strtotime( '-1 days' ));
 		$yesterday_end = date("Y-m-d 23:59:59", strtotime( '-1 days' ));
-		$sql = "select id, computerName from clients where id not in (";
+		$sql = "select id, computerName from clients where computerName like '%SEV%' and id not in (";
 		$sql .= "Select b.id from log a join clients b on a.clientId = b.id ";
 		$sql .= " where a.process = 'Backups' and a.datestamp between '" . $yesterday_start . "' and '" . $yesterday_end . "') order by computerName";
 		//$this->db->select('a.*,b.*');
@@ -62,6 +62,70 @@ class Logs_model extends CI_Model
 		$query = $this->db->query($sql);
 
 
+		$rs = $query->result_array();
+		//echo $this->db->last_query();
+		//die();
+		return $rs;
+	}
+	
+	public function get_logs(){
+
+		$sql = "select a.computerName, b.* from clients a";
+		$sql .= " join log b on a.id = b.clientId";
+		$sql .= " order by b.datestamp desc limit 500";
+		
+		//$this->db->select('a.*,b.*');
+		//$this->db->from('log a');
+		//$this->db->where(array('a.process' => 'Backups'));
+		//$this->db->join('clients b', 'a.clientId = b.id');
+		//$this->db->where('datestamp >=', $yesterday_start);
+		//$this->db->where('datestamp <=', $yesterday_end);
+
+		//$query = $this->db->get();
+		$query = $this->db->query($sql);
+
+
+		$rs = $query->result_array();
+		//echo $this->db->last_query();
+		//die();
+		return $rs;
+	}
+	
+	public function get_nav_restart(){
+		$yesterday_start = date("Y-m-d 00:00:0", strtotime( '-7 days' ));
+		$yesterday_end = date("Y-m-d 23:59:59", strtotime( '-1 days' ));
+		//$sql = "Select a.*, b.* from log a left join clients b on a.clientId = b.id union all Select a.*, b.* from log a right join clients b on a.clientId = b.id";
+		//$sql .= " where a.process = 'Backups' and a.datestamp between '" . $yesterday_start . "' and '" . $yesterday_end . "'";
+		$this->db->select('count(*) as counts, DATE_FORMAT(datestamp, "%Y-%m-%d") as weekday ');
+		$this->db->from('log');
+		$this->db->where(array('process' => 'NAV', 'errorcode' => 'A001'));
+		$this->db->where('datestamp >=', $yesterday_start);
+		$this->db->where('datestamp <=', $yesterday_end);
+		$this->db->group_by( 'weekday' );
+
+		$query = $this->db->get();
+
+		$rs = $query->result_array();
+		//echo $this->db->last_query();
+		//die();
+		return $rs;
+	}
+	
+	public function get_dd_restart(){
+		$yesterday_start = date("Y-m-d 00:00:0", strtotime( '-7 days' ));
+		$yesterday_end = date("Y-m-d 23:59:59", strtotime( '-1 days' ));
+		//$sql = "Select a.*, b.* from log a left join clients b on a.clientId = b.id union all Select a.*, b.* from log a right join clients b on a.clientId = b.id";
+		//$sql .= " where a.process = 'Backups' and a.datestamp between '" . $yesterday_start . "' and '" . $yesterday_end . "'";
+		$this->db->select('count(*) as counts, DATE_FORMAT(datestamp, "%W") as weekday ');
+		$this->db->from('log');
+		$this->db->where(array('process' => 'NAV', 'errorcode' => 'A002'));
+		$this->db->where('datestamp >=', $yesterday_start);
+		$this->db->where('datestamp <=', $yesterday_end);
+		$this->db->group_by('weekday');
+
+		$query = $this->db->get();
+		//$query = $this->db->query($sql);
+	
 		$rs = $query->result_array();
 		//echo $this->db->last_query();
 		//die();
